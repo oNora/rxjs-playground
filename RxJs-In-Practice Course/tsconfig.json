@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "outDir": "./built",
+        "allowJs": true,
+        "target": "es5",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "dom",
+            "es2015",
+            "es5",
+            "es6"
+        ]
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
