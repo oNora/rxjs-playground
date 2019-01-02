@@ -1,5 +1,5 @@
-import { from, Observable } from "rxjs";
-import { filter, concatMap } from "rxjs/operators";
+import { from, Observable, fromEvent } from "rxjs";
+import { filter, concatMap, mergeMap, exhaustMap } from "rxjs/operators";
 import $ from "jquery";
 
 let inputValue$: Observable<string>;
@@ -41,14 +41,29 @@ export function init() {
              * when we have form and the data need to be save instantly
              * Using concatMap allow set post after previous is compleat
              * For more detail example check here https://angular-university.io/lesson/rxjs-concatmap-operator
+             *
+             * Another possibility is using mergeMap allow set post in parallel
              */
             inputValue$.pipe(
                 filter((value) => value.length != 0),
-                concatMap(changes => saveChanges(changes))
+                concatMap(changes => saveChanges(changes)),
+                // mergeMap(changes => saveChanges(changes))
             ).subscribe();
-        })
+        });
+
+
+        /**
+         * real usage:
+         * to prevent multiple post if click the save button quick
+         * For more detail example check here https://angular-university.io/lesson/rxjs-exhaustmap-operator
+         */
+        fromEvent($('.saveBtn'), 'click')
+            .pipe(
+                exhaustMap(() => saveChanges($("input").val()))
+            ).subscribe();
     });
 }
 
 
 
+3

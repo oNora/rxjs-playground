@@ -6,15 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>playing with rxjs</title>
-    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>">
-    </script>
+    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
 </head>
 
 <body>
     <p>hello rxjs</p>
     <br />
 
-    <input type="text" class='concatMap' placeholder="Enter some text" />
+    <div>
+        text field used in map-strategies.js:
+        <input type="text" placeholder="Enter some text" />
+        <button class="saveBtn">Save</button>
+    </div>
+
 </body>
 
 </html>
