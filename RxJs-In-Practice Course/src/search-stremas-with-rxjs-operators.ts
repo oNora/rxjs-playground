@@ -26,6 +26,37 @@ function loadUserContent(param) {
         )
 }
 
+function applyDomChanges(result) {
+    let sectionName = '';
+    $('.albums-info li').remove();
+    result.forEach(content => {
+
+
+        if (content.completed !== undefined) {
+            sectionName = sectionName.length !== 0 ? sectionName : 'todos';
+        }
+
+        if (content.body) {
+            sectionName = sectionName.length !== 0 ? sectionName : 'posts';
+        }
+
+        if (content.completed == undefined && !content.body) {
+            sectionName = sectionName.length !== 0 ? sectionName : 'albums';
+        }
+
+
+        $('.albums-info').append(
+            `<li>
+                    <p>title: ${content.title}</p>
+                    </li>`
+        );
+    });
+
+    $('.albums-info').prepend(
+        `<li><strong>this is users ${sectionName}:</strong></li>`
+    )
+}
+
 export function init() {
     $(document).ready(function () {
 
@@ -69,34 +100,4 @@ export function init() {
     });
 
 
-    function applyDomChanges(result) {
-        let sectionName = '';
-        $('.albums-info li').remove();
-        result.forEach(content => {
-
-
-            if (content.completed !== undefined) {
-                sectionName = sectionName.length !== 0 ? sectionName : 'todos';
-            }
-
-            if (content.body) {
-                sectionName = sectionName.length !== 0 ? sectionName : 'posts';
-            }
-
-            if (content.completed == undefined && !content.body) {
-                sectionName = sectionName.length !== 0 ? sectionName : 'albums';
-            }
-
-
-            $('.albums-info').append(
-                `<li>
-                <p>title: ${content.title}</p>
-                </li>`
-            );
-        });
-
-        $('.albums-info').prepend(
-            `<li><strong>this is users ${sectionName}:</strong></li>`
-        )
-    }
 }
