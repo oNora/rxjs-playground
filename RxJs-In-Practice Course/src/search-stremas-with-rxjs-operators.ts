@@ -3,6 +3,7 @@ import { map, debounceTime, distinctUntilChanged, switchMap } from "rxjs/operato
 import { fromEvent } from "rxjs";
 
 import { creatHttpObservable } from "./http-request";
+import { debug, RxJsLoggingLevel } from './custom-operator';
 
 const user = creatHttpObservable('https://jsonplaceholder.typicode.com/users/1');
 const userContent = loadUserContent('todos')
@@ -84,6 +85,7 @@ export function init() {
                 // and here also http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-debounceTime
                 debounceTime(400),
                 distinctUntilChanged(),
+                debug(RxJsLoggingLevel.INFO, 'search'),
                 /**
                  * switchMap real usage: if user write slowly to cancel existing post request a
                  * and start search with the last entered value
