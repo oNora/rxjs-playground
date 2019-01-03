@@ -1,5 +1,5 @@
-import { Observable, noop } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Observable, noop, of, throwError, timer } from 'rxjs';
+import { map, shareReplay, catchError, finalize, retryWhen, delayWhen } from 'rxjs/operators';
 
 export function creatHttpObservable(url: string): Observable<any> {
     // create own observable
@@ -15,12 +15,19 @@ export function creatHttpObservable(url: string): Observable<any> {
         // fetch('https://api.github.com/users')
         fetch(url, { signal })
             .then(response => {
-                return response.json();
+
+                // handle error response
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    observer.error('Request failed with status code: ', response.status);
+                }
             })
             .then(body => {
                 observer.next(body);
                 observer.complete();
             })
+            // this catch error will be trigger in case of fatal error : network or DNS error
             .catch(err => {
                 observer.error(err);
             });
@@ -38,7 +45,23 @@ const todos$ = http$.pipe(
         return res;
     }),
     // prevent calling api for each subscription
-    shareReplay()
+    shareReplay(),
+    catchError(err => {
+        // return of([]) // if we want just to sent sum data on error
+
+        //The Catch and Rethrow RxJs Error Handling Strategy
+        console.log('Error occured', err);
+        return throwError(err);
+    }),
+    // finalize - will happen if the observable has completed or catchError
+    finalize(() => {
+        console.log('Finalize executed...');
+    }),
+    //  The Retry RxJs Error Handling Strateg
+    // retryWhen(error => error.pipe(
+    //     // delay(2000) // this delay whole stream
+    //     delayWhen(() => timer(2000)) // each error will wait for 2s
+    // ))
 )
 
 
