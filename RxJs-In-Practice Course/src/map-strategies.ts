@@ -32,7 +32,7 @@ function inputValueObservable(text: string): Observable<string> {
 export function init() {
     $(document).ready(function () {
 
-        $('input').keyup(function (e) {
+        $('.first-input').keyup(function (e) {
 
             inputValue$ = inputValueObservable(e.target.value);
 
@@ -59,7 +59,7 @@ export function init() {
          */
         fromEvent($('.saveBtn'), 'click')
             .pipe(
-                exhaustMap(() => saveChanges($("input").val()))
+                exhaustMap(() => saveChanges($(".first-input").val()))
             ).subscribe();
     });
 }

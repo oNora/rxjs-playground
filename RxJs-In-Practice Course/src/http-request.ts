@@ -1,7 +1,7 @@
 import { Observable, noop } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-function creatHttpObservable(url: string): Observable<any> {
+export function creatHttpObservable(url: string): Observable<any> {
     // create own observable
     return Observable.create(observer => {
 
