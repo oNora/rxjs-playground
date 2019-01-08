@@ -4,6 +4,7 @@ import { init as initMapOperators } from './map-strategies';
 import { init as initMergeOperator } from './merge-operators';
 import { init as initReduceResult } from './search-stremas-with-rxjs-operators';
 import { init as initForkJoin } from './forkJoin';
+import { init as initBufferCombine } from './buffers-with-combineLatest';
 
 
 // initHttpRequest();
@@ -12,3 +13,4 @@ initMapOperators();
 // initMergeOperator();
 initReduceResult();
 initForkJoin();
+initBufferCombine();
